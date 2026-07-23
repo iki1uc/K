@@ -35,7 +35,37 @@ const folders = [
   "X"    // Unendlichkeits-Ebene
 ];
 
-async function load() {
+async function scanFolder(folder) {
+  try {
+    const res = await fetch(folder + "/");
+    if (!res.ok) return;
+
+    const html = await res.text();
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(html, "text/html");
+    const links = [...doc.querySelectorAll("a")];
+
+    const section = document.createElement("div");
+    section.innerHTML = `<h2>${folder}</h2><ul></ul>`;
+    const ul = section.querySelector("ul");
+
+    links.forEach(link => {
+      const name = link.textContent.trim();
+      if (name !== "../") {
+        const li = document.createElement("li");
+        li.innerHTML = `<a href="${folder}/${link.getAttribute("href")}">${name}</a>`;
+        ul.appendChild(li);
+      }
+    });
+
+    document.body.appendChild(section);
+  } catch (e) {}
+}
+
+folders.forEach(scanFolder);
+
+// ⭐ ROOT‑SCAN für RAW6D / NC² / 12e / STATIONEN / level‑pyramiden
+async function loadRoot() {
   const response = await fetch(".");
   const html = await response.text();
 
@@ -57,7 +87,7 @@ async function load() {
   document.body.appendChild(list);
 }
 
-load();
+loadRoot();
 </script>
 
 </div>
