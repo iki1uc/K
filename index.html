@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Universal Index – RAW6D / NC²</title>
+<title>Universal Index – RAW6D / NC² / EVO</title>
 
 <style>
 body { font-family: Arial; background:#0b0b0b; color:#e6e6e6; padding:20px; }
@@ -22,6 +22,19 @@ li { padding:6px 0; border-bottom:1px solid #333; }
 <p>Automatische Auflistung aller Dateien, Ordner und RAW6D‑Container.</p>
 
 <script>
+// ⭐ EINZIGER gültiger Ordner‑Block
+const folders = [
+  "U",   // Universum
+  "Q",   // Quelle
+  "T",   // Zeit
+  "H",   // Halt
+  "B",   // BIOS
+  "s",   // Struktur / System / Seele
+  "x",   // Hyperraum
+  "V",   // Vektor / Verschiebung / Verbindung
+  "X"    // Unendlichkeits-Ebene
+];
+
 async function load() {
   const response = await fetch(".");
   const html = await response.text();
